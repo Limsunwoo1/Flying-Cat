@@ -44,10 +44,6 @@ void CCollisionManager::Update(float InDeltaTime)
 					if (object->GetId() == otherObject->GetId())
 						continue;
 
-					if ((object->GetObjectLayer() == OBJ_LAYER::MONSTER) &&
-						(object->GetCurCollision() == false))
-						continue;
-
 					object->Collision(otherObject);
 					otherObject->Collision(object);
 				}

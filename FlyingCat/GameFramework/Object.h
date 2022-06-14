@@ -43,7 +43,7 @@ public:
 	void SetTexture(CTexture* InTexture);
 
 	void SetPosition(Vector2D InPosition) { Position = InPosition; }
-	Vector2D GetPosition() { return Position; }
+	Vector2D GetPosition() const{ return Position; } 
 
 	void SetScale(Vector2D InScale) { Scale = InScale; }
 	Vector2D GetScale() { return Scale; }
@@ -51,7 +51,7 @@ public:
 	void SetCollisionScale(Vector2D InScale) { CollisionScale = InScale; }
 	Vector2D GetCollisionScale() { return CollisionScale; }
 
-	OBJ_LAYER GetObjectLayer();
+	OBJ_LAYER GetObjectLayer() const;
 	void SetObjectLayer(OBJ_LAYER InOBJ_Layer);
 
 	bool GetCurCollision() { return CurCollision; };

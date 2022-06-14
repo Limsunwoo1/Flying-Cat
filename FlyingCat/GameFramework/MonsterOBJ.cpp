@@ -2,33 +2,18 @@
 #include "CSceneManager.h"
 #include "KeyManager.h"
 #include "EventManager.h"
+#include "TimerManager.h"
 #include "CTexture.h"
 #include <vector>
+
+#define SPEED 200
+
 MonsterOBJ::MonsterOBJ() : CObject(Vector2D{ 100, 100 }, Vector2D{ 50, 50 })
 {
-	XPosition = false;
-	YPosition = false;
 }
 
 MonsterOBJ::MonsterOBJ(Vector2D InVector, Vector2D InScale) : CObject(Vector2D{ InVector.x , InVector.y }, Vector2D{ InScale.x, InScale.y })
 {
-	if (InVector.x >= 480)
-	{
-		XPosition = true;
-	}
-	else
-	{
-		XPosition = false;
-	}
-
-	if (InVector.y >= 340)
-	{
-		YPosition = true;
-	}
-	else
-	{
-		YPosition = false;
-	}
 }
 
 MonsterOBJ::~MonsterOBJ()
@@ -47,56 +32,54 @@ void MonsterOBJ::Update(float InDeletaTime)
 	  {
 		  if (Player->GetPosition().x < Position.x)
 		  {
-			  Position.x -= 200 * InDeletaTime;
+			  Position.x -= SPEED * InDeletaTime;
 		  }
 		  else if (Player->GetPosition().x >= Position.x)
 		  {
-			  Position.x += 200 * InDeletaTime;
+			  Position.x += SPEED * InDeletaTime;
 		  }
 
 		  if (Player->GetPosition().y < Position.y)
 		  {
-			  Position.y -= 200 * InDeletaTime;
+			  Position.y -= SPEED * InDeletaTime;
 		  }
 		  else if (Player->GetPosition().y >= Position.y)
 		  {
-			  Position.y += 200 * InDeletaTime;
+			  Position.y += SPEED * InDeletaTime;
 		  }
 
 		  return;
 	  }
-
-	  if (XPosition)
-	  {
-		  Position.x -= 200 * InDeletaTime;
-	  }
-	  else if (!XPosition)
-	  {
-		  Position.x += 200 * InDeletaTime;
-	  }
-
-	  if (YPosition)
-	  {
-		  Position.y -= 200 * InDeletaTime;
-	  }
-	  else if (!YPosition)
-	  {
-		  Position.y += 200 * InDeletaTime;
-	  }
-
 }
 
 void MonsterOBJ::LateUpdate(float InDeltaTime)
 {
-	if (CurCollision)
-		Position = PrevPosition;
-
-	PrevCollision = CurCollision;
+	CObject::LateUpdate(InDeltaTime);
 }
 
 void MonsterOBJ::Collision(const CObject* InOtherObject)
 {
 	CObject::Collision(InOtherObject);
+
+	Vector2D InOtherPosition = InOtherObject->GetPosition();
+	float DeletaTime = CTimerManager::GetInstance()->GetDeltaTime();
+	if (InOtherPosition.x < Position.x)
+	{
+		Position.x += SPEED * DeletaTime;
+	}
+	else
+	{
+		Position.x -= SPEED * DeletaTime;
+	}
+
+	if (InOtherPosition.y < Position.y)
+	{
+		Position.y += SPEED * DeletaTime;
+	}
+	else
+	{
+		Position.y -= SPEED * DeletaTime;
+	}
 	//EventInfo eventInfo;
 	//eventInfo.Type = EVENT_TYPE::DELETE_OBJECT;
 	//eventInfo.Parameter = new OBJ_LAYER(OBJ_LAYER::MONSTER);

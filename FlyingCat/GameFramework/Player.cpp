@@ -90,16 +90,14 @@ void CPlayer::Update(float InDeltaTime)
 
 void CPlayer::LateUpdate(float InDeltaTime)
 {
-	if (CurCollision)
-		Position = PrevPosition;
-
-	PrevCollision = CurCollision;
+	CObject::LateUpdate(InDeltaTime);
 }
 
 void CPlayer::Collision(const CObject* InOtherObject)
 {
 	CObject::Collision(InOtherObject);
 
+	Position = PrevPosition;
 	/*EventInfo eventInfo;
 	eventInfo.Type = EVENT_TYPE::DELETE_OBJECT;
 	eventInfo.Parameter = new OBJ_LAYER(ObjLayer);

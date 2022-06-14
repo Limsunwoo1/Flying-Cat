@@ -43,7 +43,7 @@ void CObject::SetTexture(CTexture* InTexture)
 	SetCollisionScale(Vector2D(Texture->GetWidth(), Texture->GetHeight()));
 }
 
-OBJ_LAYER CObject::GetObjectLayer()
+OBJ_LAYER CObject::GetObjectLayer() const
 {
 	return ObjLayer;
 }

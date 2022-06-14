@@ -46,18 +46,12 @@ void CTitleScene::Init()
 
 	// UI는 충돌체크하면 로직이 꼬일수도 있음 체크해도 UI 끼리만 하도록 주의
 	std::vector<OBJ_LAYER> checkLayerList;
-	checkLayerList.push_back(OBJ_LAYER::MONSTER);
-	CheckCollisionLayer[OBJ_LAYER::PLAYER] = checkLayerList;
-
 	checkLayerList.push_back(OBJ_LAYER::UI);
+	checkLayerList.push_back(OBJ_LAYER::MONSTER);
+
 	CheckCollisionLayer[OBJ_LAYER::PLAYER] = checkLayerList;
-
-	checkLayerList.push_back(OBJ_LAYER::MONSTER);
 	CheckCollisionLayer[OBJ_LAYER::UI] = checkLayerList;
-
-	checkLayerList.push_back(OBJ_LAYER::MONSTER);
 	CheckCollisionLayer[OBJ_LAYER::MONSTER] = checkLayerList;
-
 }
 
 void CTitleScene::Clear()
@@ -80,8 +74,13 @@ void CTitleScene::AutoObjectAdd(float InDeltaTime)
 
 	static float CurDeltaTilme = 0.f;
 	CurDeltaTilme += InDeltaTime;
+	static int cnt = 0;
+
 	if (CurDeltaTilme > 0.5)
 	{
+		if (cnt == 5)
+			return;
+
 		if ((XDis(Gen) % 2 == 0) && (YDis(Gen) % 2 == 0))
 		{
 			CObject* Monster = new MonsterOBJ(Vector2D(980, 680), Vector2D(50, 50));
@@ -118,7 +117,7 @@ void CTitleScene::AutoObjectAdd(float InDeltaTime)
 			newInfo.Parameter2 = Monster;
 			CEventManager::GetInstance()->AddEvent(newInfo);
 		}
-		else if ((XDis(Gen) % 2 == 0) && (YDis(Gen) % 2 != 0))
+		else
 		{
 			CObject* Monster = new MonsterOBJ(Vector2D(XDis(Gen), 0), Vector2D(50, 50));
 			Monster->SetObjectLayer(OBJ_LAYER::MONSTER);
@@ -130,8 +129,7 @@ void CTitleScene::AutoObjectAdd(float InDeltaTime)
 			newInfo.Parameter2 = Monster;
 			CEventManager::GetInstance()->AddEvent(newInfo);
 		}
-
-
+		cnt++;
 		CurDeltaTilme = 0.f;
 	}
 }
