@@ -153,6 +153,7 @@
     <ClInclude Include="GameFramework.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="Utilmath.h" />
     <ClInclude Include="MonsterOBJ.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />

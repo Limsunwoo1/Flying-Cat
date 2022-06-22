@@ -109,6 +109,9 @@
     <ClInclude Include="CBackGruond.h">
       <Filter>Object\BackGruond</Filter>
     </ClInclude>
+    <ClInclude Include="Utilmath.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TimerManager.cpp">

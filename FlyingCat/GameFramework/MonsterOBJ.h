@@ -8,6 +8,7 @@ private:
     bool    XPosition;
     bool    YPosition;
 
+    Vector2D Direction;
 public:
     MonsterOBJ();
     MonsterOBJ(Vector2D InPosition, Vector2D InScale);

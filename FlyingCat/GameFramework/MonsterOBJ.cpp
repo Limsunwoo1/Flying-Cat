@@ -10,10 +10,12 @@
 
 MonsterOBJ::MonsterOBJ() : CObject(Vector2D{ 100, 100 }, Vector2D{ 50, 50 })
 {
+
 }
 
 MonsterOBJ::MonsterOBJ(Vector2D InVector, Vector2D InScale) : CObject(Vector2D{ InVector.x , InVector.y }, Vector2D{ InScale.x, InScale.y })
 {
+
 }
 
 MonsterOBJ::~MonsterOBJ()
@@ -26,29 +28,10 @@ void MonsterOBJ::Update(float InDeletaTime)
 	  CObject::Update(InDeletaTime);
 	  CObject* Player = CSceneManager::GetInstance()->Get_Object(OBJ_LAYER::PLAYER)[0];
 
-	  PrevPosition = Position;
-
 	  if (KEY_STATE(KEY::LBUTTON) == KEY_STATE::HOLD)
 	  {
-		  if (Player->GetPosition().x < Position.x)
-		  {
-			  Position.x -= SPEED * InDeletaTime;
-		  }
-		  else if (Player->GetPosition().x >= Position.x)
-		  {
-			  Position.x += SPEED * InDeletaTime;
-		  }
-
-		  if (Player->GetPosition().y < Position.y)
-		  {
-			  Position.y -= SPEED * InDeletaTime;
-		  }
-		  else if (Player->GetPosition().y >= Position.y)
-		  {
-			  Position.y += SPEED * InDeletaTime;
-		  }
-
-		  return;
+		  Direction = Player->GetPosition() - Position;
+		  Position += UtilVector::Normalize(Direction) * SPEED * InDeletaTime;
 	  }
 }
 
